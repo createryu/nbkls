@@ -2,50 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7bed629c-18c1-4f08-9bb1-371e14b75deb" name="Default Changelist" comment="commit readme">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_sun_activation_jakarta_activation_1_2_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_sun_mail_jakarta_mail_1_6_5.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_9.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_mail_2_2_7_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_support_5_2_6_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/yuqiliu/config/KaptchaConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/yuqiliu/controller/LoginController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/yuqiliu/util/CommunityConstant.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/yuqiliu/util/CommunityUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/yuqiliu/util/MailClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/yuqiliu/annotation/LoginRequired.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/yuqiliu/config/WebMvcConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/yuqiliu/controller/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/yuqiliu/controller/interceptor/LoginRequiredInterceptor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/yuqiliu/controller/interceptor/LoginTicketInterceptor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/yuqiliu/dao/LoginTicketMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/yuqiliu/entity/LoginTicket.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/yuqiliu/util/CookieUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/yuqiliu/util/HostHolder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/setting.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nbkls.iml" beforeDir="false" afterPath="$PROJECT_DIR$/nbkls.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yuqiliu/config/KaptchaConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yuqiliu/config/KaptchaConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yuqiliu/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yuqiliu/controller/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/yuqiliu/dao/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yuqiliu/dao/UserMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/yuqiliu/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yuqiliu/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yuqiliu/util/CommunityConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yuqiliu/util/CommunityConstant.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/user-mapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/user-mapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/global.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/global.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mail/activation.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/mail/activation.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/site/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/site/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/site/operate-result.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/site/operate-result.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/site/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/site/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/site/setting.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/site/setting.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/mapper/user-mapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mapper/user-mapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/global.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/global.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/mail/activation.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/mail/activation.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/admin/data.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/admin/data.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/discuss-detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/discuss-detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/error/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/error/404.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/error/500.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/error/500.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/followee.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/followee.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/follower.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/follower.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/forget.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/forget.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/letter-detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/letter-detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/letter.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/letter.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/templates/site/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/my-post.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/my-post.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/my-reply.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/my-reply.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/notice-detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/notice-detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/notice.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/notice.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/operate-result.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/operate-result.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/register.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/search.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/search.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/templates/site/setting.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/setting.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -72,6 +55,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
+        <option value="AnnotationType" />
         <option value="Class" />
       </list>
     </option>
@@ -109,14 +93,16 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/templates" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/static/js" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.yuqiliu.entity" />
       <recent name="com.yuqiliu.util" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\IntelliJIdea-workspace\nbkls\src\main\resources\static\js" />
       <recent name="D:\IntelliJIdea-workspace\nbkls\src\main\resources\templates" />
       <recent name="D:\IntelliJIdea-workspace\nbkls\src\main\resources\static" />
     </key>
@@ -155,6 +141,7 @@
       <workItem from="1589256838522" duration="7122000" />
       <workItem from="1589332371326" duration="17389000" />
       <workItem from="1589524632158" duration="1935000" />
+      <workItem from="1589620604586" duration="36461000" />
     </task>
     <task id="LOCAL-00001" summary="commit readme">
       <created>1589337546635</created>
