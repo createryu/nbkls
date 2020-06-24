@@ -77,7 +77,7 @@
 					</ul>
 					<a th:href="@{|/user/profile/${user.id}|}" class="text-muted position-absolute rt-0">返回个人主页&gt;</a>
 				</div>
-
+				
 				<!-- 粉丝列表 -->
 				<ul class="list-unstyled">
 					<li class="media pb-3 pt-3 mb-3 border-bottom position-relative" th:each="map:${users}">
@@ -93,7 +93,7 @@
 							</h6>
 							<div>
 								<input type="hidden" id="entityId" th:value="${map.user.id}">
-								<button type="button" th:class="|btn ${map.hasFollowed?'btn-danger':'btn-info'} btn-sm float-right follow-btn|"
+								<button type="button" th:class="|btn ${map.hasFollowed?'btn-secondary':'btn-info'} btn-sm float-right follow-btn|"
 										th:if="${loginUser!=null && loginUser.id!=map.user.id}" th:text="${map.hasFollowed?'已关注':'关注TA'}">关注TA</button>
 							</div>
 						</div>

@@ -1,7 +1,9 @@
 package com.yuqiliu.controller;
 
+import com.yuqiliu.entity.Event;
 import com.yuqiliu.entity.Page;
 import com.yuqiliu.entity.User;
+import com.yuqiliu.event.EventProducer;
 import com.yuqiliu.service.FollowService;
 import com.yuqiliu.service.UserService;
 import com.yuqiliu.util.CommunityConstant;
@@ -32,6 +34,9 @@ public class FollowController implements CommunityConstant {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private EventProducer eventProducer;
+
     @PostMapping("/follow")
     @ResponseBody
     public String follow(int entityType,int entityId)
@@ -39,6 +44,15 @@ public class FollowController implements CommunityConstant {
         User user = hostHolder.getUser();
 
         followService.follow(user.getId(),entityType,entityId);
+
+        // 触发关注事件
+        Event event = new Event()
+                .setTopic(TOPIC_FOLLOW)
+                .setUserId(hostHolder.getUser().getId())
+                .setEntityType(entityType)
+                .setEntityId(entityId)
+                .setEntityUserId(entityId);
+        eventProducer.fireEvent(event);
 
         return CommunityUtil.getJSONString(0,"已关注!");
     }

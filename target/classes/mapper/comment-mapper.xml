@@ -35,4 +35,20 @@
         values(#{userId},#{entityType},#{entityId},#{targetId},#{content},#{status},#{createTime})
     </insert>
 
+    <select id="selectCommentById" resultType="Comment">
+        select <include refid="selectFields"></include>
+        from comment
+        where id = #{id}
+    </select>
+
+    <select id="getMyReply" resultType="Comment">
+        select * from comment where user_id = #{userId} and target_id = 0 and entity_type = 1
+        order by create_time desc
+        limit #{offset}, #{limit};
+    </select>
+
+    <select id="selectReplyRows" resultType="int">
+        select count(1) from comment where user_id = #{userId} and target_id = 0 and entity_type = 1;
+    </select>
+
 </mapper>

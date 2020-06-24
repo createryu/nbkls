@@ -1,4 +1,4 @@
-package com.nowcoder.community.entity;
+package com.yuqiliu.entity;
 
 import java.util.HashMap;
 import java.util.Map;

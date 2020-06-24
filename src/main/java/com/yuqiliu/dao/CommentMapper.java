@@ -2,6 +2,7 @@ package com.yuqiliu.dao;
 
 import com.yuqiliu.entity.Comment;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,5 +22,11 @@ public interface CommentMapper {
     int selectCountByEntity(int entityType,int entityId);
 
     int insertComment(Comment comment);
+
+    Comment selectCommentById(int id);
+
+    List<Comment> getMyReply(@Param("userId") int userId,int offset,int limit);
+
+    int selectReplyRows(@Param("userId") int userId);
 
 }

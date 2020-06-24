@@ -1,6 +1,7 @@
-package com.nowcoder.community.service;
+package com.yuqiliu.service;
 
-import com.nowcoder.community.util.RedisKeyUtil;
+
+import com.yuqiliu.util.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;

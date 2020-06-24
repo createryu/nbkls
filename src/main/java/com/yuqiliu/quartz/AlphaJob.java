@@ -1,4 +1,4 @@
-package com.nowcoder.community.quartz;
+package com.yuqiliu.quartz;
 
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;

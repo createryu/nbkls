@@ -3,7 +3,6 @@ package com.yuqiliu.service;
 import com.yuqiliu.dao.CommentMapper;
 import com.yuqiliu.entity.Comment;
 import com.yuqiliu.util.CommunityConstant;
-import com.yuqiliu.util.CommunityUtil;
 import com.yuqiliu.util.SensitiveFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,4 +62,21 @@ public class CommentService implements CommunityConstant {
 
         return rows;
     }
+
+    public Comment findCommentById(int id) {
+        return commentMapper.selectCommentById(id);
+    }
+
+
+    public List<Comment> getMyReply(int userId,int offset,int limit)
+    {
+        return commentMapper.getMyReply(userId,offset,limit);
+    }
+
+    public int selectReplyRows(int userId)
+    {
+        return commentMapper.selectReplyRows(userId);
+    }
+
+
 }

@@ -1,10 +1,13 @@
 package com.yuqiliu.controller;
 
+import com.qiniu.util.Auth;
+import com.qiniu.util.StringMap;
 import com.yuqiliu.annotation.LoginRequired;
+import com.yuqiliu.entity.Comment;
+import com.yuqiliu.entity.DiscussPost;
+import com.yuqiliu.entity.Page;
 import com.yuqiliu.entity.User;
-import com.yuqiliu.service.FollowService;
-import com.yuqiliu.service.LikeService;
-import com.yuqiliu.service.UserService;
+import com.yuqiliu.service.*;
 import com.yuqiliu.util.CommunityConstant;
 import com.yuqiliu.util.CommunityUtil;
 import com.yuqiliu.util.HostHolder;
@@ -14,10 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +25,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author yuqiliu
@@ -45,6 +49,18 @@ public class UserController implements CommunityConstant {
     @Value("${server.servlet.context-path}")
     private String contextPath;
 
+    @Value("${qiniu.key.access}")
+    private String accessKey;
+
+    @Value("${qiniu.key.secret}")
+    private String secretKey;
+
+    @Value("${qiniu.bucket.header.name}")
+    private String headerBucketName;
+
+    @Value("${quniu.bucket.header.url}")
+    private String headerBucketUrl;
+
     @Autowired
     private UserService userService;
 
@@ -57,79 +73,115 @@ public class UserController implements CommunityConstant {
     @Autowired
     private FollowService followService;
 
+    @Autowired
+    private DiscussPostService discussPostService;
+
+    @Autowired
+    private CommentService commentService;
+
 
     @LoginRequired
     @GetMapping("/setting")
-    public String getSettingPage()
+    public String getSettingPage(Model model)
     {
+        // 上传文件名称
+        String fileName = CommunityUtil.generateUUID();
+        // 设置响应信息
+        StringMap policy = new StringMap();
+        policy.put("returnBody",CommunityUtil.getJSONString(0));
+        // 生成上传凭证
+        Auth auth = Auth.create(accessKey,secretKey);
+        String uploadToken = auth.uploadToken(headerBucketName,fileName,3600,policy);
+
+        model.addAttribute("uploadToken",uploadToken);
+        model.addAttribute("fileName",fileName);
+
         return "/site/setting";
     }
 
-    @LoginRequired
-    @PostMapping("/upload")
-    public String uploadHeader(MultipartFile headerImage, Model model)
+    // 更新头像路径
+    @PostMapping("/header/url")
+    @ResponseBody
+    public String updateHeaderUrl(String fileName)
     {
-        if (headerImage == null)
+        if (StringUtils.isBlank(fileName))
         {
-            model.addAttribute("error","您还没有选择图片!");
-            return "/site/setting";
+            return CommunityUtil.getJSONString(1,"文件名不能为空!");
         }
 
-        String fileName = headerImage.getOriginalFilename();
-        String suffix = fileName.substring(fileName.lastIndexOf("."));
-        if (StringUtils.isBlank(suffix))
-        {
-            model.addAttribute("error","文件的格式不正确!");
-            return "/site/setting";
-        }
+        String url = headerBucketUrl + "/" + fileName;
+        userService.updateHeader(hostHolder.getUser().getId(),url);
 
-        // 生成随机文件名
-        fileName = CommunityUtil.generateUUID() + suffix;
-        // 确定文件的存储路径
-        File dest = new File(uploadPath);
-        if (!dest.exists()){
-            dest.mkdirs();
-        }
-        try {
-            // 存储文件
-            headerImage.transferTo(new File(dest +"/"+ fileName));
-        } catch (IOException e) {
-            log.error("上传文件失败: " + e.getMessage());
-            throw new RuntimeException("上传文件失败,服务器发生异常!", e);
-        }
-
-        // 更新当前用户的头像的路径（web访问路径）
-        // http://localhost:8080/community/user/header/xxx.png
-        User user = hostHolder.getUser();
-        String headerUrl = domain + contextPath + "/user/header/" + fileName;
-        userService.updateHeader(user.getId(),headerUrl);
-
-        return "redirect:/index";
+        return CommunityUtil.getJSONString(0);
     }
 
-    @GetMapping("/header/{fileName}")
-    public void getHeader(@PathVariable("fileName") String fileName, HttpServletResponse response)
-    {
-        // 图片在服务器上的存放路径
-        fileName = uploadPath + "/" +fileName;
-        // 文件后缀
-        String suffix = fileName.substring(fileName.lastIndexOf("."));
-        // 相应图片
-        response.setContentType("image/" + suffix);
-        try (
-                FileInputStream fis = new FileInputStream(fileName);
-                OutputStream os = response.getOutputStream();
-        )
-        {
-            byte[] buffer = new byte[1024];
-            int b = 0;
-            while ((b = fis.read(buffer)) != -1) {
-                os.write(buffer, 0, b);
-            }
-        } catch (IOException e) {
-            log.error("读取头像失败: " + e.getMessage());
-        }
-    }
+    // 废弃
+//    @LoginRequired
+//    @PostMapping("/upload")
+//    public String uploadHeader(MultipartFile headerImage, Model model)
+//    {
+//        if (headerImage == null)
+//        {
+//            model.addAttribute("error","您还没有选择图片!");
+//            return "/site/setting";
+//        }
+//
+//        String fileName = headerImage.getOriginalFilename();
+//        String suffix = fileName.substring(fileName.lastIndexOf("."));
+//        if (StringUtils.isBlank(suffix))
+//        {
+//            model.addAttribute("error","文件的格式不正确!");
+//            return "/site/setting";
+//        }
+//
+//        // 生成随机文件名
+//        fileName = CommunityUtil.generateUUID() + suffix;
+//        // 确定文件的存储路径
+//        File dest = new File(uploadPath);
+//        if (!dest.exists()){
+//            dest.mkdirs();
+//        }
+//        try {
+//            // 存储文件
+//            headerImage.transferTo(new File(dest +"/"+ fileName));
+//        } catch (IOException e) {
+//            log.error("上传文件失败: " + e.getMessage());
+//            throw new RuntimeException("上传文件失败,服务器发生异常!", e);
+//        }
+//
+//        // 更新当前用户的头像的路径（web访问路径）
+//        // http://localhost:8080/community/user/header/xxx.png
+//        User user = hostHolder.getUser();
+//        String headerUrl = domain + contextPath + "/user/header/" + fileName;
+//        userService.updateHeader(user.getId(),headerUrl);
+//
+//        return "redirect:/index";
+//    }
+
+    // 废弃
+//    @GetMapping("/header/{fileName}")
+//    public void getHeader(@PathVariable("fileName") String fileName, HttpServletResponse response)
+//    {
+//        // 图片在服务器上的存放路径
+//        fileName = uploadPath + "/" +fileName;
+//        // 文件后缀
+//        String suffix = fileName.substring(fileName.lastIndexOf("."));
+//        // 相应图片
+//        response.setContentType("image/" + suffix);
+//        try (
+//                FileInputStream fis = new FileInputStream(fileName);
+//                OutputStream os = response.getOutputStream();
+//        )
+//        {
+//            byte[] buffer = new byte[1024];
+//            int b = 0;
+//            while ((b = fis.read(buffer)) != -1) {
+//                os.write(buffer, 0, b);
+//            }
+//        } catch (IOException e) {
+//            log.error("读取头像失败: " + e.getMessage());
+//        }
+//    }
 
 
     @LoginRequired
@@ -192,5 +244,65 @@ public class UserController implements CommunityConstant {
 
         return "/site/profile";
     }
+
+
+    // 我的帖子
+    @GetMapping("/myPost/{userId}")
+    public String getMyDiscussPostPage(@PathVariable("userId") int userId, Model model, Page page)
+    {
+        page.setPath("/user/myPost/" + userId);
+        page.setRows(discussPostService.findDiscussPostRows(userId));
+        List<DiscussPost> lists = discussPostService.findDiscussPosts(userId, page.getOffset(), page.getLimit(), 0);
+        List<Map<String,Object>> discussPosts=new ArrayList<>();
+        User user = userService.findUserById(userId);
+
+        if (lists != null)
+        {
+            for (DiscussPost post:lists)
+            {
+                Map<String,Object> map=new HashMap<>();
+                map.put("post",post);
+
+                long likeCount = likeService.findEntityLikeCount(ENTITY_TYPE_POST, post.getId());
+                map.put("likeCount",likeCount);
+
+                discussPosts.add(map);
+            }
+        }
+
+        model.addAttribute("user",user);
+        model.addAttribute("discussPosts",discussPosts);
+
+        return "/site/my-post";
+    }
+
+    // 我的回复
+    @GetMapping("/myReply/{userId}")
+    public String getMyReplyPage(@PathVariable("userId") int userId, Model model, Page page)
+    {
+        page.setPath("/user/myReply/" + userId);
+        page.setRows(commentService.selectReplyRows(userId));
+        List<Comment> lists = commentService.getMyReply(userId,page.getOffset(),page.getLimit());
+        List<Map<String,Object>> replys=new ArrayList<>();
+        User user = userService.findUserById(userId);
+
+        if (lists != null)
+        {
+            for (Comment comment : lists)
+            {
+                Map<String,Object> map=new HashMap<>();
+                DiscussPost discussPost = discussPostService.findDiscussPostById(comment.getEntityId());
+                map.put("reply",comment);
+                map.put("post",discussPost);
+
+                replys.add(map);
+            }
+        }
+
+        model.addAttribute("user",user);
+        model.addAttribute("replys",replys);
+        return "/site/my-reply";
+    }
+
 
 }

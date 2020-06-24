@@ -1,11 +1,11 @@
-package com.nowcoder.community.quartz;
+package com.yuqiliu.quartz;
 
-import com.nowcoder.community.entity.DiscussPost;
-import com.nowcoder.community.service.DiscussPostService;
-import com.nowcoder.community.service.ElasticsearchService;
-import com.nowcoder.community.service.LikeService;
-import com.nowcoder.community.util.CommunityConstant;
-import com.nowcoder.community.util.RedisKeyUtil;
+import com.yuqiliu.entity.DiscussPost;
+import com.yuqiliu.service.DiscussPostService;
+import com.yuqiliu.service.ElasticsearchService;
+import com.yuqiliu.service.LikeService;
+import com.yuqiliu.util.CommunityConstant;
+import com.yuqiliu.util.RedisKeyUtil;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
